@@ -35,7 +35,7 @@ export declare const BLEPrinter: {
     connectPrinter: (inner_mac_address: string) => Promise<IBLEPrinter>;
     closeConn: () => Promise<void>;
     printText: (text: string, opts?: PrinterOptions) => Promise<unknown>;
-    printBill: (text: string, opts?: PrinterOptions) => any;
+    printBill: (text: string, opts?: PrinterOptions) => Promise<unknown>;
     print: (buffer: Buffer) => Promise<void>;
 };
 export declare const NetPrinter: {
@@ -44,7 +44,7 @@ export declare const NetPrinter: {
     connectPrinter: (host: string, port: number) => Promise<INetPrinter>;
     closeConn: () => Promise<void>;
     printText: (text: string, opts?: {}) => Promise<unknown>;
-    printBill: (text: string, opts?: {}) => any;
+    printBill: (text: string, opts?: {}) => Promise<unknown>;
     print: (buffer: Buffer) => Promise<void>;
 };
 export declare const NetPrinterEventEmitter: NativeEventEmitter;

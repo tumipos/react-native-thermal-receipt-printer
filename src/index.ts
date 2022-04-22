@@ -185,7 +185,7 @@ export const BLEPrinter = {
     })
   },
 
-  printBill: (text: string, opts: PrinterOptions = {}):=> {
+  printBill: (text: string, opts: PrinterOptions = {}) => {
     return new Promise((resolve, reject)=>{
       if (Platform.OS === "ios") {
         const processedText = textPreprocessingIOS(text);
@@ -277,7 +277,7 @@ export const NetPrinter = {
       }
     })
   },
-  printBill: (text: string, opts = {}): => {
+  printBill: (text: string, opts = {}) => {
     return new Promise((resolve, reject)=>{
       if (Platform.OS === "ios") {
         const processedText = textPreprocessingIOS(text);
