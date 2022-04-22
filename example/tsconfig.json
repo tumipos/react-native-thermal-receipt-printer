@@ -12,7 +12,7 @@
     "target": "esnext",
     "baseUrl": ".", // This must be specified if "paths" is.
     "paths": {
-      "react-native-thermal-receipt-printer": ["../src/index.ts"] // This mapping is relative to "baseUrl"
+      "@tumihub/react-native-thermal-receipt-printer": ["../src/index.ts"] // This mapping is relative to "baseUrl"
     },
     "typeRoots": ["./node_modules/@types/"]
   },

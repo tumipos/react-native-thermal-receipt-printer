@@ -32,7 +32,7 @@ public interface RNPrinterModule {
     public void getDeviceList(Callback successCallback, Callback errorCallback);
 
     @ReactMethod
-    public void printRawData(String base64Data, Callback errorCallback) ;
+    public void printRawData(String base64Data, Callback errorCallback, Callback successCallback) ;
 
     @ReactMethod
     public void printImageData(String imageUrl, Callback errorCallback) ;

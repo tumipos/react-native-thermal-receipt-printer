@@ -117,15 +117,20 @@ export const USBPrinter = {
       resolve();
     }),
 
-  printText: (text: string, opts: PrinterOptions = {}): void =>
-    RNUSBPrinter.printRawData(textTo64Buffer(text, opts), (error: Error) =>
-      console.warn(error)
-    ),
-
-  printBill: (text: string, opts: PrinterOptions = {}): void =>
-    RNUSBPrinter.printRawData(billTo64Buffer(text, opts), (error: Error) =>
-      console.warn(error)
-    ),
+  printText: (text: string, opts: PrinterOptions = {}) =>
+    new Promise((resolve, reject)=>{
+      RNUSBPrinter.printRawData(textTo64Buffer(text, opts),reject, resolve
+    )
+  }),
+  printBill: (text: string, opts: PrinterOptions = {}) =>
+    new Promise((resolve, reject)=>{
+      RNUSBPrinter.printRawData(billTo64Buffer(text, opts),reject, resolve
+    )
+  }),
+  print: (buffer: Buffer): Promise<void> =>
+    new Promise((resolve, reject)=>{
+      RNUSBPrinter.printRawData(buffer.toString("base64"), reject, resolve) 
+    }),
 };
 
 export const BLEPrinter = {
@@ -160,35 +165,59 @@ export const BLEPrinter = {
       resolve();
     }),
 
-  printText: (text: string, opts: PrinterOptions = {}): void => {
-    if (Platform.OS === "ios") {
-      const processedText = textPreprocessingIOS(text);
-      RNBLEPrinter.printRawData(
-        processedText.text,
-        processedText.opts,
-        (error: Error) => console.warn(error)
-      );
-    } else {
-      RNBLEPrinter.printRawData(textTo64Buffer(text, opts), (error: Error) =>
-        console.warn(error)
-      );
-    }
+  printText: (text: string, opts: PrinterOptions = {}) => {
+    return new Promise((resolve, reject)=>{
+      if (Platform.OS === "ios") {
+        const processedText = textPreprocessingIOS(text);
+        RNBLEPrinter.printRawData(
+          processedText.text,
+          processedText.opts,
+          reject,
+          resolve
+        );
+      } else {
+        RNBLEPrinter.printRawData(
+          textTo64Buffer(text, opts), 
+          reject,
+          resolve
+        );
+      }
+    })
   },
 
-  printBill: (text: string, opts: PrinterOptions = {}): void => {
-    if (Platform.OS === "ios") {
-      const processedText = textPreprocessingIOS(text);
-      RNBLEPrinter.printRawData(
-        processedText.text,
-        processedText.opts,
-        (error: Error) => console.warn(error)
-      );
-    } else {
-      RNBLEPrinter.printRawData(billTo64Buffer(text, opts), (error: Error) =>
-        console.warn(error)
-      );
-    }
+  printBill: (text: string, opts: PrinterOptions = {}):=> {
+    return new Promise((resolve, reject)=>{
+      if (Platform.OS === "ios") {
+        const processedText = textPreprocessingIOS(text);
+        RNBLEPrinter.printRawData(
+          processedText.text,
+          processedText.opts,
+          reject,
+          resolve
+        );
+      } else {
+        RNBLEPrinter.printRawData(
+          billTo64Buffer(text, opts), 
+          reject,
+          resolve
+        );
+      }
+    })
   },
+  print: (buffer: Buffer): Promise<void> =>
+    new Promise((resolve, reject)=>{
+      if (Platform.OS === "ios") {
+        const processedText = textPreprocessingIOS(buffer.toString("base64"));
+        RNBLEPrinter.printRawData(  
+          processedText.text,
+          processedText.opts, 
+          reject, 
+          resolve
+        ) 
+      } else {
+        RNBLEPrinter.printRawData(buffer.toString("base64"), reject, resolve) 
+      }
+    }),
 
   // printImage: async (imagePath: string) => {
   //   const tmp = await imageToBuffer(imagePath);
@@ -229,35 +258,58 @@ export const NetPrinter = {
       resolve();
     }),
 
-  printText: (text: string, opts = {}): void => {
-    if (Platform.OS === "ios") {
-      const processedText = textPreprocessingIOS(text);
-      RNNetPrinter.printRawData(
-        processedText.text,
-        processedText.opts,
-        (error: Error) => console.warn(error)
-      );
-    } else {
-      RNNetPrinter.printRawData(textTo64Buffer(text, opts), (error: Error) =>
-        console.warn(error)
-      );
-    }
+  printText: (text: string, opts = {}) => {
+    return new Promise((resolve, reject)=>{
+      if (Platform.OS === "ios") {
+        const processedText = textPreprocessingIOS(text);
+        RNNetPrinter.printRawData(
+          processedText.text,
+          processedText.opts,
+          reject,
+          resolve
+        );
+      } else {
+        RNNetPrinter.printRawData(
+          textTo64Buffer(text, opts), 
+          reject,
+          resolve
+        );
+      }
+    })
   },
-
-  printBill: (text: string, opts = {}): void => {
-    if (Platform.OS === "ios") {
-      const processedText = textPreprocessingIOS(text);
-      RNNetPrinter.printRawData(
-        processedText.text,
-        processedText.opts,
-        (error: Error) => console.warn(error)
-      );
-    } else {
-      RNNetPrinter.printRawData(billTo64Buffer(text, opts), (error: Error) =>
-        console.warn(error)
-      );
-    }
+  printBill: (text: string, opts = {}): => {
+    return new Promise((resolve, reject)=>{
+      if (Platform.OS === "ios") {
+        const processedText = textPreprocessingIOS(text);
+        RNNetPrinter.printRawData(
+          processedText.text,
+          processedText.opts,
+          reject,
+          resolve
+        );
+      } else {
+        RNNetPrinter.printRawData(
+          billTo64Buffer(text, opts), 
+          reject,
+          resolve
+        );
+      }
+    })
   },
+  print: (buffer: Buffer): Promise<void> =>
+    new Promise((resolve, reject)=>{
+      if (Platform.OS === "ios") {
+        const processedText = textPreprocessingIOS(buffer.toString("base64"));
+        RNNetPrinter.printRawData(  
+          processedText.text,
+          processedText.opts, 
+          reject, 
+          resolve
+        ) 
+      } else {
+        RNNetPrinter.printRawData(buffer.toString("base64"), reject, resolve) 
+      }
+    }),
 };
 
 export const NetPrinterEventEmitter = new NativeEventEmitter(RNNetPrinter);

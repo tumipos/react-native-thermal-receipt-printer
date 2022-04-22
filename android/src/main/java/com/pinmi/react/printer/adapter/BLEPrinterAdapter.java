@@ -160,7 +160,7 @@ public class BLEPrinterAdapter implements PrinterAdapter{
     }
 
     @Override
-    public void printRawData(String rawBase64Data, Callback errorCallback) {
+    public void printRawData(String rawBase64Data, Callback errorCallback, Callback successCallback){
         if(this.mBluetoothSocket == null){
             errorCallback.invoke("bluetooth connection is not built, may be you forgot to connectPrinter");
             return;
@@ -168,21 +168,7 @@ public class BLEPrinterAdapter implements PrinterAdapter{
         final String rawData = rawBase64Data;
         final BluetoothSocket socket = this.mBluetoothSocket;
         Log.v(LOG_TAG, "start to print raw data " + rawBase64Data);
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                byte [] bytes = Base64.decode(rawData, Base64.DEFAULT);
-                try{
-                    OutputStream printerOutputStream = socket.getOutputStream();
-                    printerOutputStream.write(bytes, 0, bytes.length);
-                    printerOutputStream.flush();
-                }catch (IOException e){
-                    Log.e(LOG_TAG, "failed to print data" + rawData);
-                    e.printStackTrace();
-                }
-
-            }
-        }).start();
+        new Thread(new BLEThreadWrite(socket, rawData, successCallback, errorCallback)).start();
     }
 
     @Override

@@ -14,7 +14,7 @@ import {
   IUSBPrinter,
   IBLEPrinter,
   INetPrinter,
-} from "react-native-thermal-receipt-printer";
+} from "@tumihub/react-native-thermal-receipt-printer";
 import Loader from "./Loader";
 
 const printerList: Record<string, any> = {
@@ -60,6 +60,7 @@ export default function App() {
   }, [selectedValue]);
 
   const handleConnectSelectedPrinter = () => {
+    console.log("selectedPrinter",selectedPrinter)
     if (!selectedPrinter) return;
     const connect = async () => {
       try {
@@ -71,12 +72,15 @@ export default function App() {
             );
             break;
           case "net":
+            await NetPrinter.init()
             await NetPrinter.connectPrinter(
-              "192.168.1.100",
+              "192.168.100.100",
               9100
             );
+            await NetPrinter.closeConn()
             break;
           case "usb":
+            
             await USBPrinter.connectPrinter(
               selectedPrinter?.vendor_id || "",
               selectedPrinter?.product_id || ""
@@ -97,7 +101,6 @@ export default function App() {
     try {
       // [options valueForKey:@"imageWidth"];
       const Printer = printerList[selectedValue];
-      await Printer.printImage("https://howmuch-pk.s3.ap-southeast-1.amazonaws.com/spree/stores/1380/squared_large/logo-for-grocery-store-vector-21609822.jpeg", {imageWidth: 100, paddingX: 300});
       await Printer.printText("<C>sample text bjhbfhjbdjhfbjfhdvfjdvhjdbfjbjhfdbghjfbgbhjfdgbjfdhbgbjhdfgbjhdfbghjdbghdbjgdhhbgghdjfhbgjdfbgbhjd</C>\n");
     } catch (err) {
       console.warn(err);
