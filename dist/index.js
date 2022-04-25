@@ -14,6 +14,12 @@ import * as EPToolkit from "./utils/EPToolkit";
 var RNUSBPrinter = NativeModules.RNUSBPrinter;
 var RNBLEPrinter = NativeModules.RNBLEPrinter;
 var RNNetPrinter = NativeModules.RNNetPrinter;
+var defaultOptions = {
+    beep: false,
+    cut: false,
+    tailingLine: false,
+    encoding: "UTF8",
+};
 var textTo64Buffer = function (text, opts) {
     var defaultOptions = {
         beep: false,
@@ -146,8 +152,7 @@ export var BLEPrinter = {
     print: function (buffer) {
         return new Promise(function (resolve, reject) {
             if (Platform.OS === "ios") {
-                var processedText = textPreprocessingIOS(buffer.toString("base64"));
-                RNBLEPrinter.printRawData(processedText.text, processedText.opts, reject, resolve);
+                RNBLEPrinter.printRawData(buffer.toString("base64"), defaultOptions, reject, resolve);
             }
             else {
                 RNBLEPrinter.printRawData(buffer.toString("base64"), reject, resolve);
@@ -204,8 +209,7 @@ export var NetPrinter = {
     print: function (buffer) {
         return new Promise(function (resolve, reject) {
             if (Platform.OS === "ios") {
-                var processedText = textPreprocessingIOS(buffer.toString("base64"));
-                RNNetPrinter.printRawData(processedText.text, processedText.opts, reject, resolve);
+                RNNetPrinter.printRawData(buffer.toString("base64"), defaultOptions, reject, resolve);
             }
             else {
                 RNNetPrinter.printRawData(buffer.toString("base64"), reject, resolve);

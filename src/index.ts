@@ -29,6 +29,12 @@ export interface INetPrinter {
   host: string;
   port: number;
 }
+const defaultOptions = {
+  beep: false,
+  cut: false,
+  tailingLine: false,
+  encoding: "UTF8",
+};
 
 const textTo64Buffer = (text: string, opts: PrinterOptions) => {
   const defaultOptions = {
@@ -101,7 +107,7 @@ export const USBPrinter = {
       )
     ),
 
-  connectPrinter: (vendorId: string, productId: string): Promise<IUSBPrinter> =>
+  connectPrinter: (vendorId: number, productId: number): Promise<IUSBPrinter> =>
     new Promise((resolve, reject) =>
       RNUSBPrinter.connectPrinter(
         vendorId,
@@ -207,10 +213,9 @@ export const BLEPrinter = {
   print: (buffer: Buffer): Promise<void> =>
     new Promise((resolve, reject)=>{
       if (Platform.OS === "ios") {
-        const processedText = textPreprocessingIOS(buffer.toString("base64"));
         RNBLEPrinter.printRawData(  
-          processedText.text,
-          processedText.opts, 
+          buffer.toString("base64"),
+          defaultOptions, 
           reject, 
           resolve
         ) 
@@ -299,10 +304,9 @@ export const NetPrinter = {
   print: (buffer: Buffer): Promise<void> =>
     new Promise((resolve, reject)=>{
       if (Platform.OS === "ios") {
-        const processedText = textPreprocessingIOS(buffer.toString("base64"));
         RNNetPrinter.printRawData(  
-          processedText.text,
-          processedText.opts, 
+          buffer.toString("base64"),
+          defaultOptions, 
           reject, 
           resolve
         ) 

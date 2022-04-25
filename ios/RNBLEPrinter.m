@@ -87,7 +87,8 @@ RCT_EXPORT_METHOD(connectPrinter:(NSString *)inner_mac_address
 
 RCT_EXPORT_METHOD(printRawData:(NSString *)text
                   printerOptions:(NSDictionary *)options
-                  fail:(RCTResponseSenderBlock)errorCallback) {
+                  fail:(RCTResponseSenderBlock)errorCallback
+                  success:(RCTResponseSenderBlock)successCallback) {
     @try {
         !m_printer ? [NSException raise:@"Invalid connection" format:@"printRawData: Can't connect to printer"] : nil;
         
@@ -109,7 +110,7 @@ RCT_EXPORT_METHOD(printRawData:(NSString *)text
         
         beep ? [[PrinterSDK defaultPrinterSDK] beep] : nil;
         cut ? [[PrinterSDK defaultPrinterSDK] cutPaper] : nil;
-        
+        successCallback();
     } @catch (NSException *exception) {
         errorCallback(@[exception.reason]);
     }
