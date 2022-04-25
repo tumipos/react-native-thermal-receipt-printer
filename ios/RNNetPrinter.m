@@ -166,7 +166,7 @@ RCT_EXPORT_METHOD(printRawData:(NSString *)text
         [[PrinterSDK defaultPrinterSDK] printText:text];
         beep ? [[PrinterSDK defaultPrinterSDK] beep] : nil;
         cut ? [[PrinterSDK defaultPrinterSDK] cutPaper] : nil;
-        successCallback(@[[NSString stringWithFormat:@"Connecting to printer %@", host]]);
+        successCallback(@[@"Printed"]);
 
     } @catch (NSException *exception) {
         errorCallback(@[exception.reason]);
