@@ -203,7 +203,7 @@ PODS:
     - React-jsi (= 0.64.1)
     - React-perflogger (= 0.64.1)
   - React-jsinspector (0.64.1)
-  - react-native-thermal-receipt-printer (1.0.0):
+  - react-native-thermal-receipt-printer (1.0.2):
     - React
   - React-perflogger (0.64.1)
   - React-RCTActionSheet (0.64.1):
@@ -372,7 +372,7 @@ SPEC CHECKSUMS:
   boost-for-react-native: 39c7adb57c4e60d6c5479dd8623128eb5b3f0f2c
   DoubleConversion: cf9b38bf0b2d048436d9a82ad2abe1404f11e7de
   FBLazyVector: 7b423f9e248eae65987838148c36eec1dbfe0b53
-  FBReactNativeSpec: b4535c85f87daa458e685f05780537d16aa951f3
+  FBReactNativeSpec: c7a8402e6abd4ab32a6dac23d85cdd49c99ff518
   glog: 73c2498ac6884b13ede40eda8228cb1eee9d9d62
   RCT-Folly: ec7a233ccc97cc556cf7237f0db1ff65b986f27c
   RCTRequired: ec2ebc96b7bfba3ca5c32740f5a0c6a014a274d2
@@ -385,7 +385,7 @@ SPEC CHECKSUMS:
   React-jsi: 5de8204706bd872b78ea646aee5d2561ca1214b6
   React-jsiexecutor: 124e8f99992490d0d13e0649d950d3e1aae06fe9
   React-jsinspector: 500a59626037be5b3b3d89c5151bc3baa9abf1a9
-  react-native-thermal-receipt-printer: ad2cb87a67dc96549bf5f1ce4a016c8bfa8de102
+  react-native-thermal-receipt-printer: cfd15264851411e3105736924d30ffaaa3abdb82
   React-perflogger: aad6d4b4a267936b3667260d1f649b6f6069a675
   React-RCTActionSheet: fc376be462c9c8d6ad82c0905442fd77f82a9d2a
   React-RCTAnimation: ba0a1c3a2738be224a08092fa7f1b444ab77d309
@@ -402,4 +402,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: f17c2c2765ba2f087ad1c57b3c86e5d6eed8b140
 
-COCOAPODS: 1.11.2
+COCOAPODS: 1.11.3

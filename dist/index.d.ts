@@ -20,6 +20,20 @@ export interface INetPrinter {
     host: string;
     port: number;
 }
+export declare enum PrinterWidth {
+    '58mm' = 58,
+    '80mm' = 80
+}
+export interface PrinterImageOptions {
+    beep?: boolean;
+    cut?: boolean;
+    tailingLine?: boolean;
+    encoding?: string;
+    imageWidth?: number;
+    imageHeight?: number;
+    printerWidthType?: PrinterWidth;
+    paddingX?: number;
+}
 export declare const USBPrinter: {
     init: () => Promise<void>;
     getDeviceList: () => Promise<IUSBPrinter[]>;
@@ -46,6 +60,8 @@ export declare const NetPrinter: {
     printText: (text: string, opts?: {}) => Promise<unknown>;
     printBill: (text: string, opts?: {}) => Promise<unknown>;
     print: (buffer: Buffer) => Promise<void>;
+    printImage: (imgUrl: string, opts?: PrinterImageOptions) => Promise<unknown>;
+    printImageBase64: (Base64: string, opts?: PrinterImageOptions) => Promise<unknown>;
 };
 export declare const NetPrinterEventEmitter: NativeEventEmitter;
 export declare enum RN_THERMAL_RECEIPT_PRINTER_EVENTS {

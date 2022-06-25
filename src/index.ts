@@ -29,6 +29,24 @@ export interface INetPrinter {
   host: string;
   port: number;
 }
+
+export enum PrinterWidth {
+  '58mm' = 58,
+  '80mm' = 80
+}
+
+export interface PrinterImageOptions {
+  beep?: boolean;
+  cut?: boolean;
+  tailingLine?: boolean;
+  encoding?: string;
+  imageWidth?: number,
+  imageHeight?: number,
+  printerWidthType?: PrinterWidth,
+  // only ios
+  paddingX?: number,
+}
+
 const defaultOptions = {
   beep: false,
   cut: false,
@@ -314,6 +332,20 @@ export const NetPrinter = {
         RNNetPrinter.printRawData(buffer.toString("base64"), reject, resolve) 
       }
     }),
+  printImage: (imgUrl: string, opts: PrinterImageOptions = {}) => new Promise((resolve, reject)=>{
+    if (Platform.OS === "ios") {
+      RNNetPrinter.printImageData(imgUrl, reject, resolve);
+    } else {
+      RNNetPrinter.printImageData(imgUrl, opts?.imageWidth ?? 0, opts?.imageHeight ?? 0, reject, resolve);
+    }
+  }),
+  printImageBase64: (Base64: string, opts: PrinterImageOptions = {}) => new Promise((resolve, reject)=>{
+    if (Platform.OS === "ios") {
+      RNNetPrinter.printImageBase64(Base64, opts, reject,resolve);
+    } else {
+      RNNetPrinter.printImageBase64(Base64, opts?.imageWidth ?? 0, opts?.imageHeight ?? 0, reject, resolve);
+    }
+  }),
 };
 
 export const NetPrinterEventEmitter = new NativeEventEmitter(RNNetPrinter);
