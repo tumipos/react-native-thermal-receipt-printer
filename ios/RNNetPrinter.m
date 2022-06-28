@@ -175,7 +175,8 @@ RCT_EXPORT_METHOD(printRawData:(NSString *)text
 
 RCT_EXPORT_METHOD(printImageData:(NSString *)imgUrl
                   printerOptions:(NSDictionary *)options
-                  fail:(RCTResponseSenderBlock)errorCallback) {
+                  fail:(RCTResponseSenderBlock)errorCallback
+                  success:(RCTResponseSenderBlock)successCallback) {
     @try {
         
         !connected_ip ? [NSException raise:@"Invalid connection" format:@"Can't connect to printer"] : nil;
@@ -197,7 +198,7 @@ RCT_EXPORT_METHOD(printImageData:(NSString *)imgUrl
             [[PrinterSDK defaultPrinterSDK] setPrintWidth:printerWidth];
             [[PrinterSDK defaultPrinterSDK] printImage:printImage ];
         }
-        
+        successCallback(@[@"Printed"]);
     } @catch (NSException *exception) {
         errorCallback(@[exception.reason]);
     }
@@ -205,7 +206,8 @@ RCT_EXPORT_METHOD(printImageData:(NSString *)imgUrl
 
 RCT_EXPORT_METHOD(printImageBase64:(NSString *)base64Qr
                   printerOptions:(NSDictionary *)options
-                  fail:(RCTResponseSenderBlock)errorCallback) {
+                  fail:(RCTResponseSenderBlock)errorCallback
+                  success:(RCTResponseSenderBlock)successCallback) {
     @try {
 
         !connected_ip ? [NSException raise:@"Invalid connection" format:@"Can't connect to printer"] : nil;
@@ -228,7 +230,28 @@ RCT_EXPORT_METHOD(printImageBase64:(NSString *)base64Qr
                 [[PrinterSDK defaultPrinterSDK] setPrintWidth:printerWidth];
                 [[PrinterSDK defaultPrinterSDK] printImage:printImage ];
             }
+            NSNumber* beepPtr = [options valueForKey:@"beep"];
+            NSNumber* cutPtr = [options valueForKey:@"cut"];
+            BOOL beep = (BOOL)[beepPtr intValue];
+            BOOL cut = (BOOL)[cutPtr intValue];
+            beep ? [[PrinterSDK defaultPrinterSDK] beep] : nil;
+            cut ? [[PrinterSDK defaultPrinterSDK] cutPaper] : nil;
         }
+         successCallback(@[@"Printed"]);
+    } @catch (NSException *exception) {
+        errorCallback(@[exception.reason]);
+    }
+}
+
+RCT_EXPORT_METHOD(printQr:(NSString *)qrCode
+                  printerOptions:(NSDictionary *)options
+                  fail:(RCTResponseSenderBlock)errorCallback
+                  success:(RCTResponseSenderBlock)successCallback) {
+    @try {
+        NSLog(@"%@", qrCode);
+        [[PrinterSDK defaultPrinterSDK] printQrCode:qrCode ];
+        successCallback(@[@"Printed"]);
+        NSLog(@"%@",@[@"Printed"]);
     } @catch (NSException *exception) {
         errorCallback(@[exception.reason]);
     }

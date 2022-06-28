@@ -35,6 +35,7 @@
 		22BC54C8229E811F006DE50F /* libPrinterSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libPrinterSDK.a; path = PrinterSDK/libPrinterSDK.a; sourceTree = "<group>"; };
 		22F425A222AFB28F00673AFC /* RNNetPrinter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RNNetPrinter.h; sourceTree = "<group>"; };
 		22F425A322AFB2A400673AFC /* RNNetPrinter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RNNetPrinter.m; sourceTree = "<group>"; };
+		4138527C286ABEAE00C20473 /* RNQrGenerator */ = {isa = PBXFileReference; lastKnownFileType = folder; path = RNQrGenerator; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -68,6 +69,7 @@
 		58B511D21A9E6C8500147676 = {
 			isa = PBXGroup;
 			children = (
+				4138527C286ABEAE00C20473 /* RNQrGenerator */,
 				225666E222B0ABE900EF323A /* RNUSBPrinter.h */,
 				225666E022B0ABD800EF323A /* RNUSBPrinter.m */,
 				22F425A322AFB2A400673AFC /* RNNetPrinter.m */,

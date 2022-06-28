@@ -135,7 +135,7 @@ export var BLEPrinter = {
         return new Promise(function (resolve, reject) {
             if (Platform.OS === "ios") {
                 var processedText = textPreprocessingIOS(text);
-                RNBLEPrinter.printRawData(processedText.text, processedText.opts, reject, resolve);
+                RNBLEPrinter.printRawData(processedText.text, opts, reject, resolve);
             }
             else {
                 RNBLEPrinter.printRawData(textTo64Buffer(text, opts), reject, resolve);
@@ -147,7 +147,7 @@ export var BLEPrinter = {
         return new Promise(function (resolve, reject) {
             if (Platform.OS === "ios") {
                 var processedText = textPreprocessingIOS(text);
-                RNBLEPrinter.printRawData(processedText.text, processedText.opts, reject, resolve);
+                RNBLEPrinter.printRawData(processedText.text, opts, reject, resolve);
             }
             else {
                 RNBLEPrinter.printRawData(billTo64Buffer(text, opts), reject, resolve);
@@ -161,6 +161,30 @@ export var BLEPrinter = {
             }
             else {
                 RNBLEPrinter.printRawData(buffer.toString("base64"), reject, resolve);
+            }
+        });
+    },
+    printImage: function (imgUrl, opts) {
+        if (opts === void 0) { opts = {}; }
+        return new Promise(function (resolve, reject) {
+            var _a, _b;
+            if (Platform.OS === "ios") {
+                RNBLEPrinter.printImageData(imgUrl, opts, reject, resolve);
+            }
+            else {
+                RNBLEPrinter.printImageData(imgUrl, (_a = opts === null || opts === void 0 ? void 0 : opts.imageWidth) !== null && _a !== void 0 ? _a : 0, (_b = opts === null || opts === void 0 ? void 0 : opts.imageHeight) !== null && _b !== void 0 ? _b : 0, reject, resolve);
+            }
+        });
+    },
+    printImageBase64: function (Base64, opts) {
+        if (opts === void 0) { opts = {}; }
+        return new Promise(function (resolve, reject) {
+            var _a, _b;
+            if (Platform.OS === "ios") {
+                RNBLEPrinter.printImageBase64(Base64, opts, reject, resolve);
+            }
+            else {
+                RNBLEPrinter.printImageBase64(Base64, (_a = opts === null || opts === void 0 ? void 0 : opts.imageWidth) !== null && _a !== void 0 ? _a : 0, (_b = opts === null || opts === void 0 ? void 0 : opts.imageHeight) !== null && _b !== void 0 ? _b : 0, reject, resolve);
             }
         });
     },
@@ -192,7 +216,7 @@ export var NetPrinter = {
         return new Promise(function (resolve, reject) {
             if (Platform.OS === "ios") {
                 var processedText = textPreprocessingIOS(text);
-                RNNetPrinter.printRawData(processedText.text, processedText.opts, reject, resolve);
+                RNNetPrinter.printRawData(processedText.text, opts, reject, resolve);
             }
             else {
                 RNNetPrinter.printRawData(textTo64Buffer(text, opts), reject, resolve);
@@ -204,7 +228,7 @@ export var NetPrinter = {
         return new Promise(function (resolve, reject) {
             if (Platform.OS === "ios") {
                 var processedText = textPreprocessingIOS(text);
-                RNNetPrinter.printRawData(processedText.text, processedText.opts, reject, resolve);
+                RNNetPrinter.printRawData(processedText.text, opts, reject, resolve);
             }
             else {
                 RNNetPrinter.printRawData(billTo64Buffer(text, opts), reject, resolve);
@@ -226,7 +250,7 @@ export var NetPrinter = {
         return new Promise(function (resolve, reject) {
             var _a, _b;
             if (Platform.OS === "ios") {
-                RNNetPrinter.printImageData(imgUrl, reject, resolve);
+                RNNetPrinter.printImageData(imgUrl, opts, reject, resolve);
             }
             else {
                 RNNetPrinter.printImageData(imgUrl, (_a = opts === null || opts === void 0 ? void 0 : opts.imageWidth) !== null && _a !== void 0 ? _a : 0, (_b = opts === null || opts === void 0 ? void 0 : opts.imageHeight) !== null && _b !== void 0 ? _b : 0, reject, resolve);

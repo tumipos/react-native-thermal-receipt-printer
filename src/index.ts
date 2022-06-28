@@ -195,7 +195,7 @@ export const BLEPrinter = {
         const processedText = textPreprocessingIOS(text);
         RNBLEPrinter.printRawData(
           processedText.text,
-          processedText.opts,
+          opts,
           reject,
           resolve
         );
@@ -215,7 +215,7 @@ export const BLEPrinter = {
         const processedText = textPreprocessingIOS(text);
         RNBLEPrinter.printRawData(
           processedText.text,
-          processedText.opts,
+          opts,
           reject,
           resolve
         );
@@ -241,11 +241,20 @@ export const BLEPrinter = {
         RNBLEPrinter.printRawData(buffer.toString("base64"), reject, resolve) 
       }
     }),
-
-  // printImage: async (imagePath: string) => {
-  //   const tmp = await imageToBuffer(imagePath);
-  //   RNBLEPrinter.printRawData(tmp, (error: Error) => console.warn(error));
-  // },
+    printImage: (imgUrl: string, opts: PrinterImageOptions = {}) => new Promise((resolve, reject)=>{
+      if (Platform.OS === "ios") {
+        RNBLEPrinter.printImageData(imgUrl, opts, reject, resolve);
+      } else {
+        RNBLEPrinter.printImageData(imgUrl, opts?.imageWidth ?? 0, opts?.imageHeight ?? 0, reject, resolve);
+      }
+    }),
+    printImageBase64: (Base64: string, opts: PrinterImageOptions = {}) => new Promise((resolve, reject)=>{
+      if (Platform.OS === "ios") {
+        RNBLEPrinter.printImageBase64(Base64, opts, reject, resolve);
+      } else {
+        RNBLEPrinter.printImageBase64(Base64, opts?.imageWidth ?? 0, opts?.imageHeight ?? 0, reject, resolve);
+      }
+    }),
 };
 
 export const NetPrinter = {
@@ -287,7 +296,7 @@ export const NetPrinter = {
         const processedText = textPreprocessingIOS(text);
         RNNetPrinter.printRawData(
           processedText.text,
-          processedText.opts,
+          opts,
           reject,
           resolve
         );
@@ -306,7 +315,7 @@ export const NetPrinter = {
         const processedText = textPreprocessingIOS(text);
         RNNetPrinter.printRawData(
           processedText.text,
-          processedText.opts,
+          opts,
           reject,
           resolve
         );
@@ -334,14 +343,14 @@ export const NetPrinter = {
     }),
   printImage: (imgUrl: string, opts: PrinterImageOptions = {}) => new Promise((resolve, reject)=>{
     if (Platform.OS === "ios") {
-      RNNetPrinter.printImageData(imgUrl, reject, resolve);
+      RNNetPrinter.printImageData(imgUrl, opts, reject, resolve);
     } else {
       RNNetPrinter.printImageData(imgUrl, opts?.imageWidth ?? 0, opts?.imageHeight ?? 0, reject, resolve);
     }
   }),
   printImageBase64: (Base64: string, opts: PrinterImageOptions = {}) => new Promise((resolve, reject)=>{
     if (Platform.OS === "ios") {
-      RNNetPrinter.printImageBase64(Base64, opts, reject,resolve);
+      RNNetPrinter.printImageBase64(Base64, opts, reject, resolve);
     } else {
       RNNetPrinter.printImageBase64(Base64, opts?.imageWidth ?? 0, opts?.imageHeight ?? 0, reject, resolve);
     }
